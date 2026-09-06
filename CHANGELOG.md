@@ -6,6 +6,22 @@ The format adheres to Spec-Driven Development principles, strictly separating **
 
 ---
 
+## [Constitutional Replanning & Skill Integration] - 2026-09-07
+
+**Milestone**: Formalize 4-skill agentic loop (`init-sdd`, `feature-spec`, `validate-feature`, `maintain-changelog`) across project constitution and roadmap.
+
+### 📋 Specification & Planning Changes
+- **Project Mission (`specs/mission.md`)**:
+  - Added Section 7 detailing the Agentic SDD Workflow and 4-skill suite.
+- **Technology Stack (`specs/tech-stack.md`)**:
+  - Added Section 4 documenting Agentic Architecture, skill directory layouts in `.agents/skills/`, and auditor subagent delegation protocols.
+- **Roadmap (`specs/roadmap.md`)**:
+  - Added the standardized 4-step Phasing Strategy & Agentic Lifecycle loop (`/feature-spec` -> Implementation -> `/validate-feature` -> `/maintain-changelog`).
+- **Skill Suite (`.agents/skills/`)**:
+  - Added `validate-feature` skill with independent `feature-spec-validator` subagent and structured audit report template.
+
+---
+
 ## [Phase 2: Issue Management - Implementation] - 2026-09-07
 
 **Milestone**: Deliver full Issue CRUD operations (create, view details, edit, delete, list with status filtering), database models, repository queries, server actions, and automated test suites.

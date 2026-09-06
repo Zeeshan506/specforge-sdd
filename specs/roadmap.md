@@ -1,7 +1,19 @@
 # Project Roadmap & Implementation Phases
 
-## Phasing Strategy
-The development of SpecForge is divided into small, testable, iterative phases. Each phase requires a dedicated feature specification before code implementation and explicit verification against acceptance criteria before sign-off.
+## Phasing Strategy & Agentic Lifecycle
+The development of SpecForge is divided into small, testable, iterative phases. Each phase follows a standardized 4-step agentic execution loop:
+
+```
+1. /feature-spec [Phase]  ──>  2. Implementation & Tests  ──>  3. /validate-feature  ──>  4. /maintain-changelog & Merge
+```
+
+### The 4-Skill Standardized Workflow:
+1. **Spec & Align (`feature-spec`)**: Create feature branch `feature/<feature-name>`, clarify unknowns via interactive questions, and generate synchronized `requirements.md`, `plan.md`, and `validation.md` under `specs/YYYY-MM-DD-<feature-name>/`.
+2. **Execute (`implementation`)**: Implement task groups respecting `< 300 lines/file`, adding automated unit/integration tests for each acceptance criterion.
+3. **Audit (`validate-feature`)**: Spawn independent auditor subagent to execute quality gates (`pnpm test`, `typecheck`, `lint`, `build`), audit line counts, and verify AC-1..AC-N.
+4. **Record & Merge (`maintain-changelog`)**: Update `CHANGELOG.md` with clean separation of spec vs implementation, merge to `main`, and advance roadmap.
+
+---
 
 ## Phase Overview
 
@@ -37,4 +49,4 @@ The development of SpecForge is divided into small, testable, iterative phases. 
 - [ ] Task 3.1: Tag model and many-to-many relationship with issues.
 - [ ] Task 3.2: Tag assignment and removal during issue creation/editing.
 - [ ] Task 3.3: Keyword search (title/description) and tag filtering on issue list.
-- **Deliverable / Verification**: Filter and search queries covered by test suites.
+- **Deliverable / Verification**: Filter and search queries covered by test suites via `/validate-feature`.

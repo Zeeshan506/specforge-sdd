@@ -22,8 +22,8 @@ SpecForge is a full-stack issue tracking web application built to demonstrate Sp
 
 ## 5. Scope Boundaries
 ### In Scope
-- User authentication & access control (Registration, Sign In, Sign Out, Session/JWT).
-- Issue management CRUD (Create, Read details, Update, Delete, List).
+- User authentication & access control (Registration, Sign In, Sign Out, SQLite session persistence).
+- Issue management CRUD (Create, Read details, Update, Delete, List, binary status toggle).
 - Tagging system (Add/remove tags, filter issues by tags).
 - Issue search and filtering (Keyword search on title/description, multi-filter).
 - Automated test suite (Unit and integration tests).
@@ -41,3 +41,10 @@ SpecForge is a full-stack issue tracking web application built to demonstrate Sp
 2. **Modularity & File Limits**: Keep modules cohesive and strictly under 300 lines per file.
 3. **Traceability**: Every test case and pull request must trace directly to an acceptance criterion ID.
 4. **Simple & Robust**: Prioritize simplicity, clear error states, and high reliability over over-engineering.
+
+## 7. Agentic SDD Workflow & Skill Suite
+To maintain reproducible, high-quality development, autonomous agents and developers utilize a specialized skill suite located in `.agents/skills/`:
+- **`init-sdd`**: Bootstraps the project constitution (`mission.md`, `tech-stack.md`, `roadmap.md`).
+- **`feature-spec`**: Establishes pre-implementation feature contracts (`requirements.md`, `plan.md`, `validation.md`) with explicit user alignment questions.
+- **`validate-feature`**: Spawns an independent auditor subagent to thoroughly audit implemented code against acceptance criteria, run quality gates, and enforce modularity before merging.
+- **`maintain-changelog`**: Updates `CHANGELOG.md` with strict separation between specification and implementation changes.
