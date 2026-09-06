@@ -4,14 +4,14 @@
 
 | AC ID | Description | Verification Method | Status |
 |---|---|---|---|
-| AC-1 | User Registration creates user with hashed password and establishes SQLite session | Unit & schema test + manual registration check | [ ] Pending |
-| AC-2 | Duplicate email registration returns error without saving | Validation schema test + manual registration attempt | [ ] Pending |
-| AC-3 | Valid login verifies password hash, creates SQLite session, and redirects to `/issues` | Auth session unit test + manual login test | [ ] Pending |
-| AC-4 | Invalid login credentials rejected with error message | Unit test & manual form validation | [ ] Pending |
-| AC-5 | Logout action revokes SQLite session record and redirects to `/login` | Session test + manual logout click | [ ] Pending |
-| AC-6 | Unauthenticated access to `/issues` intercepted and redirected to `/login` | Middleware logic check + manual unauthenticated visit | [ ] Pending |
-| AC-7 | Authenticated user visiting `/login` or `/register` redirected to `/issues` | Middleware logic check + manual authenticated visit | [ ] Pending |
-| AC-8 | Session persistence across restarts verified via SQLite database | Database session test + server restart check | [ ] Pending |
+| AC-1 | User Registration creates user with hashed password and establishes SQLite session | Unit & schema test + manual registration check | [x] Passed |
+| AC-2 | Duplicate email registration returns error without saving | Validation schema test + manual registration attempt | [x] Passed |
+| AC-3 | Valid login verifies password hash, creates SQLite session, and redirects to `/issues` | Auth session unit test + manual login test | [x] Passed |
+| AC-4 | Invalid login credentials rejected with error message | Unit test & manual form validation | [x] Passed |
+| AC-5 | Logout action revokes SQLite session record and redirects to `/login` | Session test + manual logout click | [x] Passed |
+| AC-6 | Unauthenticated access to `/issues` intercepted and redirected to `/login` | Middleware logic check + manual unauthenticated visit | [x] Passed |
+| AC-7 | Authenticated user visiting `/login` or `/register` redirected to `/issues` | Middleware logic check + manual authenticated visit | [x] Passed |
+| AC-8 | Session persistence across restarts verified via SQLite database | Database session test + server restart check | [x] Passed |
 
 ## 2. Automated Test Suite
 - `src/tests/auth/password.test.ts`: Verifies password hashing (`hashPassword`) produces valid salt, and password comparison (`comparePassword`) validates matches and rejects mismatches.
@@ -28,10 +28,10 @@
 7. **Session Persistence**: While logged in, restart the dev server. Refresh `/issues` and confirm you remain logged in.
 
 ## 4. Merge Readiness (Definition of Done)
-- [ ] All task groups in `plan.md` marked complete.
-- [ ] All ACs in `requirements.md` verified in matrix above.
-- [ ] Automated unit tests pass without errors (`pnpm test`).
-- [ ] TypeScript typecheck passes without errors (`pnpm typecheck`).
-- [ ] Linter passes without errors (`pnpm lint`).
-- [ ] No file exceeds the 300 lines limit constraint.
-- [ ] Git commit messages are clean and descriptive.
+- [x] All task groups in `plan.md` marked complete.
+- [x] All ACs in `requirements.md` verified in matrix above.
+- [x] Automated unit tests pass without errors (`pnpm test`).
+- [x] TypeScript typecheck passes without errors (`pnpm typecheck`).
+- [x] Linter passes without errors (`pnpm lint`).
+- [x] No file exceeds the 300 lines limit constraint.
+- [x] Git commit messages are clean and descriptive.

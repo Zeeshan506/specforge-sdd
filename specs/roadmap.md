@@ -8,7 +8,7 @@ The development of SpecForge is divided into small, testable, iterative phases. 
 | Phase | Title | Objective | Status |
 |---|---|---|---|
 | Phase 0 | Foundation & Setup | Tooling, configs, Prisma SQLite, base shell, Vitest setup | Completed |
-| Phase 1 | Authentication & Access Control | Registration, login/logout, session management, protected routes | Pending |
+| Phase 1 | Authentication & Access Control | Registration, login/logout, session management, protected routes | Completed |
 | Phase 2 | Issue Management | Issue CRUD (create, view, edit, delete, list), status tracking | Pending |
 | Phase 3 | Tagging & Search | Tags association, keyword search, tag-based filtering | Pending |
 
@@ -22,10 +22,10 @@ The development of SpecForge is divided into small, testable, iterative phases. 
 - **Deliverable / Verification**: Running development server, passing `pnpm test`, `pnpm typecheck`, `pnpm lint`.
 
 ### Phase 1: Authentication & Access Control
-- [ ] Task 1.1: User schema, password hashing, and session/token auth utilities.
-- [ ] Task 1.2: Registration and login server actions / endpoints with validation.
-- [ ] Task 1.3: Auth UI forms (Sign Up, Sign In, Sign Out button) and route middleware.
-- **Deliverable / Verification**: Authenticated flows covered with integration tests.
+- [x] Task 1.1: User and Session schema, password hashing, and SQLite session utilities.
+- [x] Task 1.2: Registration and login server actions with Zod input validation.
+- [x] Task 1.3: Auth UI forms (Sign Up, Sign In, Sign Out button) and route middleware.
+- **Deliverable / Verification**: Authenticated flows covered with unit tests and route guards.
 
 ### Phase 2: Issue Management
 - [ ] Task 2.1: Issue database model and repository query functions.
