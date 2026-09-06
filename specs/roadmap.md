@@ -7,7 +7,7 @@ The development of SpecForge is divided into small, testable, iterative phases. 
 
 | Phase | Title | Objective | Status |
 |---|---|---|---|
-| Phase 0 | Foundation & Setup | Tooling, configs, Prisma SQLite, base shell, Vitest setup | In Progress |
+| Phase 0 | Foundation & Setup | Tooling, configs, Prisma SQLite, base shell, Vitest setup | Completed |
 | Phase 1 | Authentication & Access Control | Registration, login/logout, session management, protected routes | Pending |
 | Phase 2 | Issue Management | Issue CRUD (create, view, edit, delete, list), status tracking | Pending |
 | Phase 3 | Tagging & Search | Tags association, keyword search, tag-based filtering | Pending |
@@ -15,10 +15,10 @@ The development of SpecForge is divided into small, testable, iterative phases. 
 ---
 
 ### Phase 0: Foundation & Setup
-- [ ] Task 0.1: Initialize Next.js project with TypeScript, Tailwind CSS, and pnpm.
-- [ ] Task 0.2: Configure Prisma with SQLite and initialize database client.
-- [ ] Task 0.3: Configure Vitest test runner, React Testing Library, and healthcheck test.
-- [ ] Task 0.4: Build base responsive application layout and navigation shell.
+- [x] Task 0.1: Initialize Next.js project with TypeScript, Tailwind CSS, and pnpm.
+- [x] Task 0.2: Configure Prisma with SQLite and initialize database client.
+- [x] Task 0.3: Configure Vitest test runner, React Testing Library, and healthcheck test.
+- [x] Task 0.4: Build base responsive application layout and navigation shell.
 - **Deliverable / Verification**: Running development server, passing `pnpm test`, `pnpm typecheck`, `pnpm lint`.
 
 ### Phase 1: Authentication & Access Control

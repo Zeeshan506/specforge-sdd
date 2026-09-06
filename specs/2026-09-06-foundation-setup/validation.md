@@ -4,11 +4,11 @@
 
 | AC ID | Description | Verification Method | Status |
 |---|---|---|---|
-| AC-1 | Next.js compilation and build success via `pnpm build` | Automated command verification (`pnpm build`) | [ ] Pending |
-| AC-2 | Prisma client connection to local SQLite without error | Unit test / integration check (`src/tests/db.test.ts`) | [ ] Pending |
-| AC-3 | Vitest test runner executing and passing 100% test suites | Automated test runner (`pnpm test`) | [ ] Pending |
-| AC-4 | Base UI shell renders Navbar branding, links, and container | Component smoke test (`src/tests/app-shell.test.tsx`) & manual inspection | [ ] Pending |
-| AC-5 | Zero lint errors, zero type errors, all files <= 300 lines | `pnpm lint`, `pnpm typecheck`, file line count check | [ ] Pending |
+| AC-1 | Next.js compilation and build success via `pnpm build` | Automated command verification (`pnpm build`) | [x] Passed |
+| AC-2 | Prisma client connection to local SQLite without error | Unit test / integration check (`src/tests/db.test.ts`) | [x] Passed |
+| AC-3 | Vitest test runner executing and passing 100% test suites | Automated test runner (`pnpm test`) | [x] Passed |
+| AC-4 | Base UI shell renders Navbar branding, links, and container | Component smoke test (`src/tests/app-shell.test.tsx`) & manual inspection | [x] Passed |
+| AC-5 | Zero lint errors, zero type errors, all files <= 300 lines | `pnpm lint`, `pnpm typecheck`, file line count check | [x] Passed |
 
 ## 2. Automated Test Suite
 - `src/tests/healthcheck.test.ts`: Validates Vitest runner configuration and environment variables.
@@ -23,10 +23,10 @@
 5. Run `pnpm test` to confirm all Vitest test suites execute and pass.
 
 ## 4. Merge Readiness (Definition of Done)
-- [ ] All task groups in `plan.md` marked complete.
-- [ ] All ACs in `requirements.md` verified in matrix above.
-- [ ] Automated tests pass without errors (`pnpm test`).
-- [ ] TypeScript typecheck passes without errors (`pnpm typecheck`).
-- [ ] Linter passes without errors (`pnpm lint`).
-- [ ] No file exceeds the 300 lines limit constraint.
-- [ ] Git commit messages are clean and descriptive.
+- [x] All task groups in `plan.md` marked complete.
+- [x] All ACs in `requirements.md` verified in matrix above.
+- [x] Automated tests pass without errors (`pnpm test`).
+- [x] TypeScript typecheck passes without errors (`pnpm typecheck`).
+- [x] Linter passes without errors (`pnpm lint`).
+- [x] No file exceeds the 300 lines limit constraint.
+- [x] Git commit messages are clean and descriptive.
