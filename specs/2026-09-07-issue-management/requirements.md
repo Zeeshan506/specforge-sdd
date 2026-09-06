@@ -26,14 +26,14 @@ As outlined in `specs/mission.md` and `specs/roadmap.md` (Phase 2), SpecForge re
 - **Dependencies**: `@prisma/client`, `zod` for payload validation, `lucide-react` for status/action icons.
 
 ## 4. Acceptance Criteria
-- [ ] **AC-1 (Create Issue)**: Given an authenticated user and valid title and description, when submitted via `/issues/new`, then a new Issue record is created in SQLite with status `OPEN` and the user is redirected to `/issues/[id]`.
-- [ ] **AC-2 (Validation on Create/Edit)**: Given invalid inputs (empty title or title > 100 chars), when submitted, then validation errors are displayed and no database record is saved.
-- [ ] **AC-3 (List Issues & Filter)**: Given a collection of issues, when navigating to `/issues`, then all issues are displayed with status badges, and filtering by `ALL`, `OPEN`, or `CLOSED` accurately filters the list.
-- [ ] **AC-4 (View Issue Detail)**: Given an existing issue ID, when visiting `/issues/[id]`, then the issue title, full description, author name, status, and timestamps are rendered.
-- [ ] **AC-5 (Edit Issue)**: Given an authenticated author modifying title, description, or status via `/issues/[id]/edit`, when submitted, then the database record is updated and changes reflect immediately on `/issues/[id]`.
-- [ ] **AC-6 (Toggle Status Action)**: Given an authenticated author clicking "Close Issue" or "Reopen Issue", when triggered, then the issue status toggles between `OPEN` and `CLOSED`.
-- [ ] **AC-7 (Delete Issue)**: Given an authenticated author triggering deletion on an issue, when confirmed, then the issue record is removed from SQLite and the user is redirected to `/issues`.
-- [ ] **AC-8 (Unauthorized Mutation Prevention)**: Given an unauthenticated user or a user who is not the issue author attempting to update or delete an issue, then the request is rejected with an authorization error.
+- [x] **AC-1 (Create Issue)**: Given an authenticated user and valid title and description, when submitted via `/issues/new`, then a new Issue record is created in SQLite with status `OPEN` and the user is redirected to `/issues/[id]`.
+- [x] **AC-2 (Validation on Create/Edit)**: Given invalid inputs (empty title or title > 100 chars), when submitted, then validation errors are displayed and no database record is saved.
+- [x] **AC-3 (List Issues & Filter)**: Given a collection of issues, when navigating to `/issues`, then all issues are displayed with status badges, and filtering by `ALL`, `OPEN`, or `CLOSED` accurately filters the list.
+- [x] **AC-4 (View Issue Detail)**: Given an existing issue ID, when visiting `/issues/[id]`, then the issue title, full description, author name, status, and timestamps are rendered.
+- [x] **AC-5 (Edit Issue)**: Given an authenticated author modifying title, description, or status via `/issues/[id]/edit`, when submitted, then the database record is updated and changes reflect immediately on `/issues/[id]`.
+- [x] **AC-6 (Toggle Status Action)**: Given an authenticated author clicking "Close Issue" or "Reopen Issue", when triggered, then the issue status toggles between `OPEN` and `CLOSED`.
+- [x] **AC-7 (Delete Issue)**: Given an authenticated author triggering deletion on an issue, when confirmed, then the issue record is removed from SQLite and the user is redirected to `/issues`.
+- [x] **AC-8 (Unauthorized Mutation Prevention)**: Given an unauthenticated user or a user who is not the issue author attempting to update or delete an issue, then the request is rejected with an authorization error.
 
 ## 5. Edge Cases & Error Handling
 - **Non-Existent Issue ID**: Visiting `/issues/[id]` for a non-existent ID renders a clean 404 Not Found state.

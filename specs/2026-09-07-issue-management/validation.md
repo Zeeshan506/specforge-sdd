@@ -4,14 +4,14 @@
 
 | AC ID | Description | Verification Method | Status |
 |---|---|---|---|
-| AC-1 | Create Issue with title and description associates authenticated author and creates SQLite record | Integration test + manual creation check | [ ] Pending |
-| AC-2 | Validation prevents saving issues with empty title or title exceeding 100 characters | Schema unit test + manual validation check | [ ] Pending |
-| AC-3 | Issues list displays all issues with status badges and filters accurately by `ALL`, `OPEN`, `CLOSED` | Repository query test + UI component check | [ ] Pending |
-| AC-4 | Issue detail page displays title, description, author info, status badge, and timestamps | Query test + page render test | [ ] Pending |
-| AC-5 | Edit issue updates title, description, and status with immediate reflection on detail page | Action unit test + manual edit check | [ ] Pending |
-| AC-6 | Status toggle action switches issue between `OPEN` and `CLOSED` | Action unit test + manual toggle check | [ ] Pending |
-| AC-7 | Delete issue removes record from SQLite and redirects to `/issues` | Action unit test + manual deletion check | [ ] Pending |
-| AC-8 | Unauthorized mutations (unauthenticated or non-author) are rejected | Authorization unit test | [ ] Pending |
+| AC-1 | Create Issue with title and description associates authenticated author and creates SQLite record | Integration test + manual creation check | [x] Passed |
+| AC-2 | Validation prevents saving issues with empty title or title exceeding 100 characters | Schema unit test + manual validation check | [x] Passed |
+| AC-3 | Issues list displays all issues with status badges and filters accurately by `ALL`, `OPEN`, `CLOSED` | Repository query test + UI component check | [x] Passed |
+| AC-4 | Issue detail page displays title, description, author info, status badge, and timestamps | Query test + page render test | [x] Passed |
+| AC-5 | Edit issue updates title, description, and status with immediate reflection on detail page | Action unit test + manual edit check | [x] Passed |
+| AC-6 | Status toggle action switches issue between `OPEN` and `CLOSED` | Action unit test + manual toggle check | [x] Passed |
+| AC-7 | Delete issue removes record from SQLite and redirects to `/issues` | Action unit test + manual deletion check | [x] Passed |
+| AC-8 | Unauthorized mutations (unauthenticated or non-author) are rejected | Authorization unit test | [x] Passed |
 
 ## 2. Automated Test Suite
 - `src/tests/issues/validation.test.ts`: Verifies issue Zod schemas (title length requirements, trimming, description handling).
@@ -27,10 +27,10 @@
 7. **Delete Issue**: Click "Delete Issue", confirm in dialog; verify record is removed and browser redirects to `/issues`.
 
 ## 4. Merge Readiness (Definition of Done)
-- [ ] All task groups in `plan.md` marked complete.
-- [ ] All ACs in `requirements.md` verified in matrix above.
-- [ ] Automated unit and integration tests pass without errors (`pnpm test`).
-- [ ] TypeScript typecheck passes without errors (`pnpm typecheck`).
-- [ ] Linter passes without errors (`pnpm lint`).
-- [ ] No file exceeds the 300 lines limit constraint.
-- [ ] Git commit messages are clean and descriptive.
+- [x] All task groups in `plan.md` marked complete.
+- [x] All ACs in `requirements.md` verified in matrix above.
+- [x] Automated unit and integration tests pass without errors (`pnpm test`).
+- [x] TypeScript typecheck passes without errors (`pnpm typecheck`).
+- [x] Linter passes without errors (`pnpm lint`).
+- [x] No file exceeds the 300 lines limit constraint.
+- [x] Git commit messages are clean and descriptive.

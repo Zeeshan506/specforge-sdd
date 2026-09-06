@@ -6,6 +6,53 @@ The format adheres to Spec-Driven Development principles, strictly separating **
 
 ---
 
+## [Phase 2: Issue Management - Implementation] - 2026-09-07
+
+**Milestone**: Deliver full Issue CRUD operations (create, view details, edit, delete, list with status filtering), database models, repository queries, server actions, and automated test suites.
+
+### 🚀 Feature Implementation & Code Changes
+- **Database Layer (`prisma/schema.prisma`)**:
+  - Added `Issue` model with `title`, `description`, `status` (`OPEN` | `CLOSED`), and relation to `User` with cascade delete (**AC-1**).
+- **Data Access & Queries (`src/server/queries/issues.ts`)**:
+  - Implemented `getIssues`: Fetches issues with status filtering (`ALL`, `OPEN`, `CLOSED`) including author metadata (**AC-3**).
+  - Implemented `getIssueById`: Fetches single issue with author metadata and 404 safety (**AC-4**).
+  - Implemented `getIssueCounts`: Computes status breakdown counts for tabs.
+- **Server Actions (`src/server/actions/issues/`)**:
+  - Implemented `createIssue` (`create.ts`): Validates title/description via Zod, associates authenticated author, and defaults status to `OPEN` (**AC-1**, **AC-2**).
+  - Implemented `updateIssue` and `toggleIssueStatus` (`update.ts`): Updates issue attributes and toggles status between `OPEN` and `CLOSED` with strict author ownership checks (**AC-5**, **AC-6**, **AC-8**).
+  - Implemented `deleteIssue` (`delete.ts`): Removes issue record from database with author authorization check (**AC-7**, **AC-8**).
+- **Frontend UI & Pages**:
+  - Created `IssueFilterTabs` (`src/components/issues/IssueFilterTabs.tsx`): Interactive status filter tabs with count badges.
+  - Created `IssueList` (`src/components/issues/IssueList.tsx`): Issue items, status icons, timestamps, and empty state CTA.
+  - Created `IssueForm` (`src/components/issues/IssueForm.tsx`): Reusable form for create/edit modes with field validation.
+  - Created `IssueActions` (`src/components/issues/IssueActions.tsx`): Quick status toggle, edit link, and delete confirmation dialog.
+  - Built routes: `/issues` (`page.tsx`), `/issues/new` (`page.tsx`), `/issues/[id]` (`page.tsx`), and `/issues/[id]/edit` (`page.tsx`).
+
+### 🧪 Testing & Quality Assurance
+- Created test suites:
+  - `src/tests/issues/validation.test.ts`: Zod schema validation rules, title trimming, length checks, and status validation.
+  - `src/tests/issues/crud.test.ts`: Database integration tests for full CRUD lifecycle, status filtering, and count calculations.
+- Verified 100% test pass rate (37/37 tests across 8 test suites), clean typecheck (`pnpm typecheck`), and zero linter warnings (`pnpm lint`).
+- Verified all files strictly satisfy `< 300 lines/file` constraint.
+
+---
+
+## [Phase 2: Issue Management - Specification] - 2026-09-07
+
+**Commit**: `12b370c`  
+**Milestone**: Establish feature contract and task breakdown for Issue Management with binary status lifecycle.
+
+### 📋 Specification & Planning Changes
+- **Feature Requirements (`specs/2026-09-07-issue-management/requirements.md`)**:
+  - Defined scope for issue CRUD, binary status (`OPEN`, `CLOSED`), author association, and ownership authorization.
+  - Established acceptance criteria `AC-1` through `AC-8` (create, validation, list & filter, view details, edit, status toggle, delete, and unauthorized mutation guard).
+- **Implementation Plan (`specs/2026-09-07-issue-management/plan.md`)**:
+  - Structured 6 task groups for database model, repository queries, server actions, UI components, App Router pages, and test suites.
+- **Validation Matrix (`specs/2026-09-07-issue-management/validation.md`)**:
+  - Defined acceptance criteria verification matrix, automated test mapping, manual checklist, and Definition of Done.
+
+---
+
 ## [Phase 1: Authentication & Access Control - Implementation] - 2026-09-06
 
 **Milestone**: Implement user registration, credential authentication, SQLite-backed session persistence, route protection middleware, and automated auth test suites.
