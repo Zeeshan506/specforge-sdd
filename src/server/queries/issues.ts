@@ -1,13 +1,16 @@
 import { db } from "@/lib/db";
-import type { Issue } from "@prisma/client";
+import type { Issue, Tag } from "@prisma/client";
 
-export interface IssueWithAuthor extends Issue {
+export interface IssueWithDetails extends Issue {
   user: {
     id: string;
     name: string;
     email: string;
   };
+  tags: Tag[];
 }
+
+export type IssueWithAuthor = IssueWithDetails;
 
 export interface IssueCounts {
   all: number;
@@ -15,16 +18,48 @@ export interface IssueCounts {
   closed: number;
 }
 
+export interface GetIssuesOptions {
+  status?: string;
+  q?: string;
+  tag?: string;
+}
+
 /**
- * Retrieves issues list with optional status filtering.
+ * Retrieves issues list with optional search, tag, and status filtering.
  */
 export async function getIssues(
-  statusFilter?: string
-): Promise<IssueWithAuthor[]> {
-  const whereClause: { status?: string } = {};
+  optionsOrStatus?: GetIssuesOptions | string
+): Promise<IssueWithDetails[]> {
+  const options: GetIssuesOptions =
+    typeof optionsOrStatus === "string"
+      ? { status: optionsOrStatus }
+      : optionsOrStatus || {};
 
-  if (statusFilter === "OPEN" || statusFilter === "CLOSED") {
-    whereClause.status = statusFilter;
+  const whereClause: {
+    status?: string;
+    OR?: Array<{ title?: { contains: string }; description?: { contains: string } }>;
+    tags?: { some: { name: string } };
+  } = {};
+
+  if (options.status === "OPEN" || options.status === "CLOSED") {
+    whereClause.status = options.status;
+  }
+
+  const query = options.q?.trim();
+  if (query) {
+    whereClause.OR = [
+      { title: { contains: query } },
+      { description: { contains: query } },
+    ];
+  }
+
+  const tagFilter = options.tag?.trim().toLowerCase();
+  if (tagFilter) {
+    whereClause.tags = {
+      some: {
+        name: tagFilter,
+      },
+    };
   }
 
   return db.issue.findMany({
@@ -37,6 +72,11 @@ export async function getIssues(
           email: true,
         },
       },
+      tags: {
+        orderBy: {
+          name: "asc",
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
@@ -45,11 +85,11 @@ export async function getIssues(
 }
 
 /**
- * Retrieves a single issue by ID with its author information.
+ * Retrieves a single issue by ID with its author and tags.
  */
 export async function getIssueById(
   id: string
-): Promise<IssueWithAuthor | null> {
+): Promise<IssueWithDetails | null> {
   return db.issue.findUnique({
     where: { id },
     include: {
@@ -58,6 +98,11 @@ export async function getIssueById(
           id: true,
           name: true,
           email: true,
+        },
+      },
+      tags: {
+        orderBy: {
+          name: "asc",
         },
       },
     },

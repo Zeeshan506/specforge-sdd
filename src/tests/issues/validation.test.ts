@@ -2,14 +2,17 @@ import { describe, it, expect } from "vitest";
 import {
   createIssueSchema,
   updateIssueSchema,
+  tagSchema,
+  tagListSchema,
 } from "@/lib/validations/issue";
 
 describe("Issue Zod Validation Schemas", () => {
   describe("createIssueSchema", () => {
-    it("should accept valid issue creation data", () => {
+    it("should accept valid issue creation data with tags", () => {
       const input = {
         title: "Fix responsive layout on mobile",
         description: "Navigation bar overlaps hero banner on small screens.",
+        tags: ["UI", "Frontend"],
       };
 
       const result = createIssueSchema.safeParse(input);
@@ -19,6 +22,7 @@ describe("Issue Zod Validation Schemas", () => {
         expect(result.data.description).toBe(
           "Navigation bar overlaps hero banner on small screens."
         );
+        expect(result.data.tags).toEqual(["ui", "frontend"]);
       }
     });
 
@@ -33,6 +37,7 @@ describe("Issue Zod Validation Schemas", () => {
       if (result.success) {
         expect(result.data.title).toBe("Trimmed Title");
         expect(result.data.description).toBe("Trimmed Description");
+        expect(result.data.tags).toEqual([]);
       }
     });
 
@@ -78,17 +83,19 @@ describe("Issue Zod Validation Schemas", () => {
   });
 
   describe("updateIssueSchema", () => {
-    it("should accept valid update data with status", () => {
+    it("should accept valid update data with status and tags", () => {
       const input = {
         title: "Updated Title",
         description: "Updated Description",
         status: "CLOSED",
+        tags: ["bug", "backend"],
       };
 
       const result = updateIssueSchema.safeParse(input);
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data.status).toBe("CLOSED");
+        expect(result.data.tags).toEqual(["bug", "backend"]);
       }
     });
 
@@ -99,6 +106,40 @@ describe("Issue Zod Validation Schemas", () => {
       };
 
       const result = updateIssueSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+  });
+
+  describe("tagSchema and tagListSchema (AC-8)", () => {
+    it("should normalize, trim, and lowercase tag names", () => {
+      const result = tagSchema.safeParse("  Frontend-Bug  ");
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data).toBe("frontend-bug");
+      }
+    });
+
+    it("should reject empty or whitespace-only tag strings", () => {
+      const result = tagSchema.safeParse("   ");
+      expect(result.success).toBe(false);
+    });
+
+    it("should reject tag names longer than 30 characters", () => {
+      const result = tagSchema.safeParse("a".repeat(31));
+      expect(result.success).toBe(false);
+    });
+
+    it("should deduplicate tags with different casing", () => {
+      const result = tagListSchema.safeParse(["Bug", "BUG", "bug", "frontend"]);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data).toEqual(["bug", "frontend"]);
+      }
+    });
+
+    it("should reject tag lists exceeding 10 tags", () => {
+      const tags = Array.from({ length: 11 }, (_, i) => `tag-${i}`);
+      const result = tagListSchema.safeParse(tags);
       expect(result.success).toBe(false);
     });
   });

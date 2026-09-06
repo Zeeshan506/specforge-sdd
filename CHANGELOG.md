@@ -6,6 +6,58 @@ The format adheres to Spec-Driven Development principles, strictly separating **
 
 ---
 
+## [Phase 3: Tagging & Search - Implementation] - 2026-09-07
+
+**Milestone**: Deliver full Tagging and Search system (tag creation/linking, tag detachment, multi-parameter keyword search across title/description, tag filtering, status combination, and URL synchronization).
+
+### 🚀 Feature Implementation & Code Changes
+- **Database Layer (`prisma/schema.prisma`)**:
+  - Added `Tag` model with unique normalized name, color, timestamps, and many-to-many relationship with `Issue` (**AC-1**, **AC-2**).
+- **Data Access & Queries (`src/server/queries/`)**:
+  - Created `tags.ts`: Implemented `getAllTags` and `getTagByName` queries for listing and retrieving tags (**AC-1**).
+  - Updated `issues.ts`: Added support for keyword query `q` (matching title and description), tag filtering (`tag`), and status filtering (`status`) with relations to `tags` (**AC-4**, **AC-5**, **AC-6**).
+- **Validation & Server Actions**:
+  - Updated `src/lib/validations/issue.ts`: Added `tagSchema` and `tagListSchema` with trimming, lowercase normalization, deduplication, length caps (<= 30 chars), and count limits (<= 10 tags) (**AC-8**).
+  - Updated `src/server/actions/issues/create.ts`: Added `connectOrCreate` support for attaching tags during issue creation (**AC-1**).
+  - Updated `src/server/actions/issues/update.ts`: Implemented atomic tag synchronization on issue edits (**AC-1**, **AC-2**).
+- **Frontend UI & Components**:
+  - Created `TagBadge` (`src/components/issues/TagBadge.tsx`): Reusable tag badges with support for links, remove buttons, and active states (**AC-3**).
+  - Created `TagInput` (`src/components/issues/TagInput.tsx`): Interactive chip input for adding and removing tags with live validation (**AC-1**, **AC-2**).
+  - Created `IssueSearchBar` (`src/components/issues/IssueSearchBar.tsx`): URL-synchronized keyword search input with clear trigger (**AC-4**, **AC-7**).
+  - Created `TagFilterBar` (`src/components/issues/TagFilterBar.tsx`): Filter bar with tag count badges and active tag toggles (**AC-5**).
+  - Updated `IssueList` (`src/components/issues/IssueList.tsx`): Displayed tag badges on issue cards and added an empty filter state with reset CTA (**AC-3**, **AC-7**).
+  - Updated `IssueForm` (`src/components/issues/IssueForm.tsx`): Integrated `TagInput` for tag selection during creation and editing.
+  - Updated `IssueFilterTabs` (`src/components/issues/IssueFilterTabs.tsx`): Preserved active search query and tag parameters across status tab switches.
+  - Updated routes: `/issues` (`page.tsx`), `/issues/[id]` (`page.tsx`), `/issues/[id]/edit` (`page.tsx`).
+
+### 🧪 Testing & Quality Assurance
+- Created test suites:
+  - `src/tests/server/queries/search-and-tags.test.ts`: Integration tests for tag creation, tag detachment, substring keyword search, tag filtering, and combined multi-filter queries (**AC-1**, **AC-2**, **AC-4**, **AC-5**, **AC-6**).
+  - `src/tests/components/issues/TagBadge.test.tsx`: Component tests for tag badge rendering and removal callbacks (**AC-3**).
+  - `src/tests/components/issues/TagInput.test.tsx`: Component tests for chip addition, Enter key support, duplicate prevention, character limits, and tag removal (**AC-1**, **AC-2**, **AC-8**).
+  - `src/tests/components/issues/IssueSearchBar.test.tsx`: Component tests for search query synchronization and clear actions (**AC-4**, **AC-7**).
+  - `src/tests/components/issues/IssueList.test.tsx`: Component tests for tag display on issue cards and empty filter states (**AC-3**, **AC-7**).
+  - Updated `src/tests/issues/validation.test.ts`: Added unit tests for tag schema normalization, trimming, character limits, and deduplication (**AC-8**).
+- Verified 100% test pass rate (62/62 tests across 13 test suites), clean typecheck (`pnpm typecheck`), clean linter (`pnpm lint`), and successful production build (`pnpm build`).
+- Confirmed all source, test, and specification files strictly satisfy `< 300 lines/file` constraint.
+
+---
+
+## [Phase 3: Tagging & Search - Specification] - 2026-09-07
+
+**Milestone**: Establish feature specification, acceptance criteria, and task breakdown for Tagging & Multi-Parameter Search.
+
+### 📋 Specification & Planning Changes
+- **Feature Requirements (`specs/2026-09-07-tagging-search/requirements.md`)**:
+  - Defined scope for `Tag` model, tag assignment/detachment, title & description substring search, and URL query persistence.
+  - Established acceptance criteria `AC-1` through `AC-8`.
+- **Implementation Plan (`specs/2026-09-07-tagging-search/plan.md`)**:
+  - Structured 4 modular task groups covering Prisma schema changes, query subsystem, validation & server actions, UI components, and test suites.
+- **Validation Matrix (`specs/2026-09-07-tagging-search/validation.md`)**:
+  - Defined acceptance criteria verification matrix, automated test mapping, manual checklist, and Definition of Done.
+
+---
+
 ## [Constitutional Replanning & Skill Integration] - 2026-09-07
 
 **Milestone**: Formalize 4-skill agentic loop (`init-sdd`, `feature-spec`, `validate-feature`, `maintain-changelog`) across project constitution and roadmap.

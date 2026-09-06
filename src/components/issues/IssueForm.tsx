@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createIssue } from "@/server/actions/issues/create";
 import { updateIssue } from "@/server/actions/issues/update";
+import { TagInput } from "@/components/issues/TagInput";
 
 interface IssueFormProps {
   initialData?: {
@@ -12,6 +13,7 @@ interface IssueFormProps {
     title: string;
     description: string;
     status: string;
+    tags?: string[];
   };
 }
 
@@ -22,6 +24,7 @@ export function IssueForm({ initialData }: IssueFormProps) {
   const [title, setTitle] = useState(initialData?.title || "");
   const [description, setDescription] = useState(initialData?.description || "");
   const [status, setStatus] = useState(initialData?.status || "OPEN");
+  const [tags, setTags] = useState<string[]>(initialData?.tags || []);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const [isPending, setIsPending] = useState(false);
@@ -38,6 +41,7 @@ export function IssueForm({ initialData }: IssueFormProps) {
           title,
           description,
           status,
+          tags,
         });
 
         if (!result.success) {
@@ -54,6 +58,7 @@ export function IssueForm({ initialData }: IssueFormProps) {
         const result = await createIssue({
           title,
           description,
+          tags,
         });
 
         if (!result.success) {
@@ -131,6 +136,16 @@ export function IssueForm({ initialData }: IssueFormProps) {
           <p className="mt-1 text-xs text-red-600">
             {fieldErrors.description[0]}
           </p>
+        )}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Tags
+        </label>
+        <TagInput tags={tags} onChange={setTags} />
+        {fieldErrors.tags?.[0] && (
+          <p className="mt-1 text-xs text-red-600">{fieldErrors.tags[0]}</p>
         )}
       </div>
 

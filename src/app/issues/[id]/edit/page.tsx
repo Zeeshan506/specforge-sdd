@@ -43,7 +43,7 @@ export default async function EditIssuePage({ params }: EditIssuePageProps) {
           Edit Issue
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          Update the title, description, or status of this issue
+          Update the title, description, tags, or status of this issue
         </p>
       </div>
 
@@ -54,6 +54,7 @@ export default async function EditIssuePage({ params }: EditIssuePageProps) {
             title: issue.title,
             description: issue.description,
             status: issue.status,
+            tags: issue.tags ? issue.tags.map((t) => t.name) : [],
           }}
         />
       </div>

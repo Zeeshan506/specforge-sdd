@@ -22,7 +22,7 @@ The development of SpecForge is divided into small, testable, iterative phases. 
 | Phase 0 | Foundation & Setup | Tooling, configs, Prisma SQLite, base shell, Vitest setup | Completed |
 | Phase 1 | Authentication & Access Control | Registration, login/logout, session management, protected routes | Completed |
 | Phase 2 | Issue Management | Issue CRUD (create, view, edit, delete, list), status tracking | Completed |
-| Phase 3 | Tagging & Search | Tags association, keyword search, tag-based filtering | Pending |
+| Phase 3 | Tagging & Search | Tags association, keyword search, tag-based filtering | Completed |
 
 ---
 
@@ -46,7 +46,7 @@ The development of SpecForge is divided into small, testable, iterative phases. 
 - **Deliverable / Verification**: Full CRUD operations verified with automated unit and integration tests.
 
 ### Phase 3: Tagging & Search
-- [ ] Task 3.1: Tag model and many-to-many relationship with issues.
-- [ ] Task 3.2: Tag assignment and removal during issue creation/editing.
-- [ ] Task 3.3: Keyword search (title/description) and tag filtering on issue list.
+- [x] Task 3.1: Tag model and many-to-many relationship with issues.
+- [x] Task 3.2: Tag assignment and removal during issue creation/editing.
+- [x] Task 3.3: Keyword search (title/description) and tag filtering on issue list.
 - **Deliverable / Verification**: Filter and search queries covered by test suites via `/validate-feature`.

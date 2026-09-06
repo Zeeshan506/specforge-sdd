@@ -4,6 +4,7 @@ import { CircleDot, CheckCircle2, ArrowLeft } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth/user";
 import { getIssueById } from "@/server/queries/issues";
 import { IssueActions } from "@/components/issues/IssueActions";
+import { TagBadge } from "@/components/issues/TagBadge";
 
 interface IssueDetailPageProps {
   params: {
@@ -88,6 +89,19 @@ export default async function IssueDetailPage({ params }: IssueDetailPageProps) 
               </>
             )}
           </div>
+
+          {issue.tags && issue.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {issue.tags.map((tag) => (
+                <TagBadge
+                  key={tag.id}
+                  name={tag.name}
+                  size="md"
+                  href={`/issues?tag=${encodeURIComponent(tag.name)}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="space-y-2">

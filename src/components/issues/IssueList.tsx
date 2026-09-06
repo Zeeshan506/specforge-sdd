@@ -1,13 +1,37 @@
 import Link from "next/link";
-import { CircleDot, CheckCircle2, PlusCircle } from "lucide-react";
-import type { IssueWithAuthor } from "@/server/queries/issues";
+import { CircleDot, CheckCircle2, PlusCircle, SearchX } from "lucide-react";
+import type { IssueWithDetails } from "@/server/queries/issues";
+import { TagBadge } from "@/components/issues/TagBadge";
 
 interface IssueListProps {
-  issues: IssueWithAuthor[];
+  issues: IssueWithDetails[];
+  hasActiveFilters?: boolean;
 }
 
-export function IssueList({ issues }: IssueListProps) {
+export function IssueList({ issues, hasActiveFilters = false }: IssueListProps) {
   if (issues.length === 0) {
+    if (hasActiveFilters) {
+      return (
+        <div className="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
+          <SearchX className="mx-auto h-10 w-10 text-gray-400 mb-3" />
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+            No matching issues found
+          </h3>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            Try adjusting your search terms or clearing active filters.
+          </p>
+          <div className="mt-6">
+            <Link
+              href="/issues"
+              className="inline-flex items-center gap-2 rounded-lg bg-gray-100 dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <span>Reset all filters</span>
+            </Link>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
         <CircleDot className="mx-auto h-10 w-10 text-gray-400 mb-3" />
@@ -40,8 +64,8 @@ export function IssueList({ issues }: IssueListProps) {
             key={issue.id}
             className="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
           >
-            <div className="flex items-start gap-3 min-w-0">
-              <span className="mt-0.5">
+            <div className="flex items-start gap-3 min-w-0 flex-1">
+              <span className="mt-0.5 shrink-0">
                 {isOpen ? (
                   <CircleDot className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                 ) : (
@@ -49,13 +73,26 @@ export function IssueList({ issues }: IssueListProps) {
                 )}
               </span>
 
-              <div className="min-w-0 space-y-1">
-                <Link
-                  href={`/issues/${issue.id}`}
-                  className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition truncate block"
-                >
-                  {issue.title}
-                </Link>
+              <div className="min-w-0 space-y-1.5 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Link
+                    href={`/issues/${issue.id}`}
+                    className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition truncate"
+                  >
+                    {issue.title}
+                  </Link>
+                  {issue.tags && issue.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {issue.tags.map((tag) => (
+                        <TagBadge
+                          key={tag.id}
+                          name={tag.name}
+                          href={`/issues?tag=${encodeURIComponent(tag.name)}`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                   <span

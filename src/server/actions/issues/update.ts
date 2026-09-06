@@ -7,7 +7,7 @@ import { updateIssueSchema } from "@/lib/validations/issue";
 import type { ActionResult } from "@/types/auth";
 
 /**
- * Updates an issue's title, description, or status.
+ * Updates an issue's title, description, status, or tags.
  * Requires the authenticated user to be the issue author.
  */
 export async function updateIssue(
@@ -51,7 +51,7 @@ export async function updateIssue(
     };
   }
 
-  const { title, description, status } = parsed.data;
+  const { title, description, status, tags } = parsed.data;
 
   await db.issue.update({
     where: { id: issueId },
@@ -59,6 +59,17 @@ export async function updateIssue(
       title,
       description: description ?? existing.description,
       status: status ?? existing.status,
+      ...(tags !== undefined
+        ? {
+            tags: {
+              set: [],
+              connectOrCreate: tags.map((name) => ({
+                where: { name },
+                create: { name },
+              })),
+            },
+          }
+        : {}),
     },
   });
 

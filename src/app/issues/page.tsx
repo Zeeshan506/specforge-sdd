@@ -3,12 +3,17 @@ import { redirect } from "next/navigation";
 import { PlusCircle } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth/user";
 import { getIssues, getIssueCounts } from "@/server/queries/issues";
+import { getAllTags } from "@/server/queries/tags";
 import { IssueFilterTabs } from "@/components/issues/IssueFilterTabs";
+import { IssueSearchBar } from "@/components/issues/IssueSearchBar";
+import { TagFilterBar } from "@/components/issues/TagFilterBar";
 import { IssueList } from "@/components/issues/IssueList";
 
 interface IssuesPageProps {
   searchParams?: {
     status?: string;
+    q?: string;
+    tag?: string;
   };
 }
 
@@ -19,11 +24,19 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
     redirect("/login");
   }
 
-  const statusFilter = searchParams?.status;
-  const [issues, counts] = await Promise.all([
-    getIssues(statusFilter),
+  const [issues, counts, allTags] = await Promise.all([
+    getIssues({
+      status: searchParams?.status,
+      q: searchParams?.q,
+      tag: searchParams?.tag,
+    }),
     getIssueCounts(),
+    getAllTags(),
   ]);
+
+  const hasActiveFilters = Boolean(
+    searchParams?.status || searchParams?.q || searchParams?.tag
+  );
 
   return (
     <div className="space-y-6">
@@ -33,7 +46,7 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
             Issues
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Track, manage, and resolve project tasks and bugs
+            Track, manage, search, and resolve project tasks and bugs
           </p>
         </div>
 
@@ -47,8 +60,13 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
       </div>
 
       <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <IssueSearchBar />
+        </div>
+
         <IssueFilterTabs counts={counts} />
-        <IssueList issues={issues} />
+        <TagFilterBar tags={allTags} />
+        <IssueList issues={issues} hasActiveFilters={hasActiveFilters} />
       </div>
     </div>
   );

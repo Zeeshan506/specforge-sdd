@@ -12,19 +12,35 @@ export function IssueFilterTabs({ counts }: IssueFilterTabsProps) {
   const searchParams = useSearchParams();
   const currentStatus = searchParams.get("status") || "ALL";
 
+  const getHrefForStatus = (statusValue: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (statusValue === "ALL") {
+      params.delete("status");
+    } else {
+      params.set("status", statusValue);
+    }
+    const queryString = params.toString();
+    return queryString ? `/issues?${queryString}` : "/issues";
+  };
+
   const tabs = [
-    { label: "All Issues", value: "ALL", count: counts.all, href: "/issues" },
+    {
+      label: "All Issues",
+      value: "ALL",
+      count: counts.all,
+      href: getHrefForStatus("ALL"),
+    },
     {
       label: "Open",
       value: "OPEN",
       count: counts.open,
-      href: "/issues?status=OPEN",
+      href: getHrefForStatus("OPEN"),
     },
     {
       label: "Closed",
       value: "CLOSED",
       count: counts.closed,
-      href: "/issues?status=CLOSED",
+      href: getHrefForStatus("CLOSED"),
     },
   ];
 

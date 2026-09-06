@@ -28,7 +28,7 @@ export async function createIssue(
     };
   }
 
-  const { title, description } = parsed.data;
+  const { title, description, tags } = parsed.data;
 
   const issue = await db.issue.create({
     data: {
@@ -36,6 +36,16 @@ export async function createIssue(
       description: description || "",
       status: "OPEN",
       userId: user.id,
+      ...(tags && tags.length > 0
+        ? {
+            tags: {
+              connectOrCreate: tags.map((name) => ({
+                where: { name },
+                create: { name },
+              })),
+            },
+          }
+        : {}),
     },
   });
 

@@ -43,9 +43,22 @@ model Issue {
   status      String   @default("OPEN")
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags        Tag[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([userId])
   @@index([status])
 }
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  color     String   @default("#3b82f6")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  issues    Issue[]
+
+  @@index([name])
+}
+
